@@ -1,0 +1,210 @@
+syntax = "proto3";
+
+package SpaceX.API.Device;
+
+option go_package = "spacex.com/api/device";
+
+import "spacex/api/device/common.proto";
+
+message DishStowRequest {
+	optional bool unstow = 1 [json_name="unstow"];
+}
+
+message DishStowResponse {
+}
+
+message DishGetContextRequest {
+}
+
+message DishGetContextResponse {
+	optional .SpaceX.API.Device.DeviceInfo device_info = 1 [json_name="deviceInfo"];
+	optional .SpaceX.API.Device.DeviceState device_state = 7 [json_name="deviceState"];
+	optional float obstruction_fraction = 2 [json_name="obstructionFraction"];
+	optional float obstruction_valid_s = 3 [json_name="obstructionValidS"];
+	optional uint32 cell_id = 4 [json_name="cellId"];
+	optional uint32 pop_rack_id = 5 [json_name="popRackId"];
+	optional uint32 initial_satellite_id = 8 [json_name="initialSatelliteId"];
+	optional uint32 initial_gateway_id = 9 [json_name="initialGatewayId"];
+	optional bool on_backup_beam = 10 [json_name="onBackupBeam"];
+	optional float seconds_to_slot_end = 6 [json_name="secondsToSlotEnd"];
+}
+
+message DishGetHistoryResponse {
+	optional uint64 current = 1 [json_name="current"];
+	repeated float pop_ping_drop_rate = 1001 [json_name="popPingDropRate"];
+	repeated float pop_ping_latency_ms = 1002 [json_name="popPingLatencyMs"];
+	repeated float downlink_throughput_bps = 1003 [json_name="downlinkThroughputBps"];
+	repeated float uplink_throughput_bps = 1004 [json_name="uplinkThroughputBps"];
+	repeated float snr = 1005 [json_name="snr"];
+	repeated bool scheduled = 1006 [json_name="scheduled"];
+	repeated bool obstructed = 1007 [json_name="obstructed"];
+}
+
+message DishGetStatusResponse {
+	optional .SpaceX.API.Device.DeviceInfo device_info = 1 [json_name="deviceInfo"];
+	optional .SpaceX.API.Device.DeviceState device_state = 2 [json_name="deviceState"];
+	optional .SpaceX.API.Device.DishState state = 1006 [json_name="state"];
+	optional .SpaceX.API.Device.DishAlerts alerts = 1005 [json_name="alerts"];
+	optional float snr = 1001 [json_name="snr"];
+	optional float seconds_to_first_nonempty_slot = 1002 [json_name="secondsToFirstNonemptySlot"];
+	optional float pop_ping_drop_rate = 1003 [json_name="popPingDropRate"];
+	optional float downlink_throughput_bps = 1007 [json_name="downlinkThroughputBps"];
+	optional float uplink_throughput_bps = 1008 [json_name="uplinkThroughputBps"];
+	optional float pop_ping_latency_ms = 1009 [json_name="popPingLatencyMs"];
+	optional .SpaceX.API.Device.DishObstructionStats obstruction_stats = 1004 [json_name="obstructionStats"];
+	optional bool stow_requested = 1010 [json_name="stowRequested"];
+}
+
+message DishGetObstructionMapRequest {
+}
+
+message DishGetObstructionMapResponse {
+	optional uint32 num_rows = 1 [json_name="numRows"];
+	optional uint32 num_cols = 2 [json_name="numCols"];
+	repeated float snr = 3 [json_name="snr"];
+}
+
+message DishAlerts {
+	optional bool motors_stuck = 1 [json_name="motorsStuck"];
+	optional bool thermal_throttle = 3 [json_name="thermalThrottle"];
+	optional bool thermal_shutdown = 2 [json_name="thermalShutdown"];
+	optional bool mast_not_near_vertical = 5 [json_name="mastNotNearVertical"];
+	optional bool unexpected_location = 4 [json_name="unexpectedLocation"];
+	optional bool slow_ethernet_speeds = 6 [json_name="slowEthernetSpeeds"];
+}
+
+message DishObstructionStats {
+	optional bool currently_obstructed = 5 [json_name="currentlyObstructed"];
+	optional float fraction_obstructed = 1 [json_name="fractionObstructed"];
+	optional float last_24h_obstructed_s = 1006 [json_name="last24hObstructedS"];
+	optional float valid_s = 4 [json_name="validS"];
+	repeated float wedge_fraction_obstructed = 2 [json_name="wedgeFractionObstructed"];
+	repeated float wedge_abs_fraction_obstructed = 3 [json_name="wedgeAbsFractionObstructed"];
+}
+
+message DishAuthenticateResponse {
+	optional .SpaceX.API.Device.ChallengeResponse dish = 2 [json_name="dish"];
+}
+
+enum DishState {
+	UNKNOWN = 0;
+	CONNECTED = 1;
+	SEARCHING = 2;
+	BOOTING = 3;
+}
+
+message DishGetDiagnosticsResponse
+{
+	/// Unique identifier of the dish.
+	string id = 1;
+
+	/// Hardware version of the dish.
+	string hardware_version = 2;
+
+	/// Software version of the dish.
+	string software_version = 3;
+
+	/// Approximate time zone of the device in relation to UTC.
+	int32 utc_offset_s = 4;
+
+	/// Result of the hardware self test that the UT runs on boot.
+	enum TestResult
+	{
+		/// No hardware test has been run.
+		NO_RESULT = 0;
+
+		/// The hardware test passed.
+		PASSED = 1;
+
+		/// The hardware test failed. Something is wrong.
+		FAILED = 2;
+	}
+	TestResult hardware_self_test = 7;
+
+	message Alerts
+	{
+		/// The dish is heating.
+		bool dish_is_heating = 1;
+
+		/// The dish CPU is throttled because its temperature is too high.
+		bool dish_thermal_throttle = 2;
+
+		/// The dish is not enabled because its temperature is extremely high.
+		bool dish_thermal_shutdown = 3;
+
+		/// The dish is throttled because the temperature of the external power
+		/// supply is too high.
+		bool power_supply_thermal_throttle = 4;
+
+		/// The dish motors are stuck, and the dish may not be aligned properly.
+		/// This may happen if something is blocking the movement of the dish.
+		bool motors_stuck = 5;
+
+		/// The dish is not oriented vertically enough and may be impacting service.
+		bool mast_not_near_vertical = 6;
+
+		/// The negotiated ethernet speeds to the dish are low and may be preventing
+		/// maximum service throughput.
+		bool slow_ethernet_speeds = 7;
+
+		/// The dish has a software upgrade that is installed, and will be applied
+		/// after the next reboot.
+		bool software_install_pending = 8;
+
+		/// The dish is moving too fast for its configured policy.
+		bool moving_too_fast_for_policy = 9;
+
+		/// Starlink considers this dish obstructed, and performance may be degraded.
+		/// The user should review the terminal field of view and remove obstructions.
+		bool obstructed = 10;
+	}
+	Alerts alerts = 5;
+
+	/// The dish may be disabled for a variety of reasons.
+	/// This code may be unknown while the dish is loading state
+	/// of if the dish does not support this metric.
+	enum DisablementCode
+	{
+		// Unknown state.
+		UNKNOWN = 0;
+
+		/// There is no disablement, things are working fine.
+		OKAY = 1;
+
+		/// No active account, or expired subscription for this user.
+		NO_ACTIVE_ACCOUNT = 2;
+
+		/// User is too far from their service address.
+		TOO_FAR_FROM_SERVICE_ADDRESS = 3;
+
+		/// User is in the Ocean and is not allowed to be.
+		IN_OCEAN = 4;
+
+		/// In a country the user isn't allowed to get service in.
+		INVALID_COUNTRY = 5;
+
+		/// The user is in a country that is blocked for general service.
+		BLOCKED_COUNTRY = 6;
+
+		/// The user has exceeded the data usage quota and sandbox policy has been enforced.
+		DATA_OVERAGE_SANDBOX_POLICY = 7;
+	}
+	DisablementCode disablement_code = 6;
+
+	message Location
+	{
+		/// Whether local location queries are enabled for this terminal.
+		/// If location is not enabled, the remainder of this message is invalid.
+		bool enabled = 1;
+
+		/// Latitude in degrees [-90, +90].
+		double latitude = 2;
+
+		/// Longtitude in degreees [-180,+180].
+		double longitude = 3;
+
+		/// Altitude in meters above sea level.
+		double altitude_meters = 4;
+	}
+	Location location = 8;
+}

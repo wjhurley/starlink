@@ -1,0 +1,82 @@
+{
+  "name": "@gibme/starlink",
+  "version": "0.0.2",
+  "description": "A Package for interacting with various Starlink API(s)",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/*"
+  ],
+  "exports": {
+    ".": "./dist/index.js",
+    "./enterprise": "./dist/enterprise/index.js",
+    "./dishy": "./dist/local/dishy.js",
+    "./wifirouter": "./dist/local/wifirouter.js"
+  },
+  "typesVersions": {
+    "*": {
+      "enterprise": [
+        "./dist/enterprise/index.d.ts"
+      ],
+      "dishy": [
+        "./dist/local/dishy.d.ts"
+      ],
+      "wifirouter": [
+        "./dist/local/wifirouter.d.ts"
+      ]
+    }
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "yarn build:protobuf && yarn build:typescript",
+    "build:docs": "./node_modules/.bin/typedoc",
+    "build:typescript": "./node_modules/.bin/tsc",
+    "build:protobuf": "./node_modules/.bin/run-script-os",
+    "build:protobuf:win32": "protoc --plugin=\".\\node_modules\\.bin\\protoc-gen-ts_proto\" --ts_proto_out=./src/protobuf --ts_proto_opt=\"outputServices=nice-grpc,outputServices=generic-definitions,useExactTypes=false\" --proto_path=./proto ./proto/spacex/api/device/service.proto",
+    "build:protobuf:default": "protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=./src/protobuf --ts_proto_opt=outputServices=nice-grpc,outputServices=generic-definitions,useExactTypes=false --proto_path=./proto ./proto/spacex/api/device/service.proto",
+    "test": "yarn test:style && yarn test:typecheck && yarn test:mocha",
+    "test:typecheck": "./node_modules/.bin/tsc --noEmit",
+    "test:style": "yarn style",
+    "test:mocha": "./node_modules/.bin/cross-env NODE_ENV=production ./node_modules/.bin/mocha --exit --timeout 240000 --require ts-node/register ./test/test.ts",
+    "style": "./node_modules/.bin/eslint ./src/**/*.ts ./test/**/*.ts",
+    "fix-style": "./node_modules/.bin/eslint --fix ./src/**/*.ts ./test/**/*.ts",
+    "fix:style": "yarn fix-style",
+    "prepublishOnly": "yarn build"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "engineStrict": true,
+  "author": {
+    "name": "Brandon Lehmann",
+    "email": "brandonlehmann@gmail.com"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.6",
+    "@types/node": "^20.11.7",
+    "@typescript-eslint/eslint-plugin": "^6.19.1",
+    "@typescript-eslint/parser": "^6.19.1",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.56.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-n": "^16.6.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "grpc-tools": "^1.12.4",
+    "mocha": "^10.2.0",
+    "run-script-os": "^1.1.6",
+    "ts-node": "^10.9.2",
+    "ts-proto": "^1.181.1",
+    "typedoc": "^0.25.7",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@gibme/cache": "^1.1.10",
+    "@gibme/fetch": "^1.0.14",
+    "abort-controller": "^3.0.0",
+    "nice-grpc": "^2.1.9",
+    "protobufjs": "^7.3.2",
+    "rxjs": "^7.8.1"
+  }
+}
