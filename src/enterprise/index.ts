@@ -21,7 +21,7 @@
 import BaseAPI, { Starlink } from './api/base_api';
 import Account from './models/account';
 
-export { Starlink } from './api/base_api';
+export { Starlink };
 export { Account } from './models/account';
 export { Router } from './models/router';
 export { RouterConfig } from './models/router_config';

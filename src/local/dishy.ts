@@ -19,24 +19,8 @@
 // SOFTWARE.
 
 import GRPCApi from './api/grpc_api';
-import type {
-    DishGetDiagnosticsResponse,
-    DishGetDiagnosticsResponse_Alerts,
-    DishGetDiagnosticsResponse_Location,
-    DishGetDiagnosticsResponse_DisablementCode,
-    DishGetDiagnosticsResponse_TestResult,
-    DishGetHistoryResponse, DishGetStatusResponse, DishGetObstructionMapResponse
-} from '../protobuf/spacex/api/device/dish';
-import { GetLocationResponse } from '../protobuf/spacex/api/device/device';
-
-export {
-    DishGetDiagnosticsResponse,
-    DishGetDiagnosticsResponse_Alerts,
-    DishGetDiagnosticsResponse_Location,
-    DishGetDiagnosticsResponse_DisablementCode,
-    DishGetDiagnosticsResponse_TestResult,
-    DishGetHistoryResponse
-};
+import { StarlinkGRPC } from './api/types';
+export { StarlinkGRPC };
 
 export default class Dishy extends GRPCApi {
     constructor (
@@ -50,7 +34,7 @@ export default class Dishy extends GRPCApi {
     /**
      * Fetches diagnostic information from a dishy
      */
-    public async fetch_diagnostics (): Promise<DishGetDiagnosticsResponse> {
+    public async fetch_diagnostics (): Promise<StarlinkGRPC.Dishy.Diagnostics> {
         const response = await this.handle({ getDiagnostics: {} });
 
         if (!response.dishGetDiagnostics) {
@@ -63,7 +47,7 @@ export default class Dishy extends GRPCApi {
     /**
      * Fetches history information from a dishy
      */
-    public async fetch_history (): Promise<DishGetHistoryResponse> {
+    public async fetch_history (): Promise<StarlinkGRPC.Dishy.History> {
         const response = await this.handle({ getHistory: {} });
 
         if (!response.dishGetHistory) {
@@ -78,7 +62,7 @@ export default class Dishy extends GRPCApi {
      *
      * Note: Location information must be enabled in the dishy settings
      */
-    public async fetch_location (): Promise<GetLocationResponse> {
+    public async fetch_location (): Promise<StarlinkGRPC.Dishy.Location> {
         const response = await this.handle({ getLocation: {} });
 
         if (!response.getLocation) {
@@ -91,7 +75,7 @@ export default class Dishy extends GRPCApi {
     /**
      * Fetches obstruction map information from a dishy
      */
-    public async fetch_obstruction_map (): Promise<DishGetObstructionMapResponse> {
+    public async fetch_obstruction_map (): Promise<StarlinkGRPC.Dishy.ObstructionMap> {
         const response = await this.handle({ dishGetObstructionMap: {} });
 
         if (!response.dishGetObstructionMap) {
@@ -104,7 +88,7 @@ export default class Dishy extends GRPCApi {
     /**
      * Fetches status information from a dishy
      */
-    public async fetch_status (): Promise<DishGetStatusResponse> {
+    public async fetch_status (): Promise<StarlinkGRPC.Dishy.Status> {
         const response = await this.handle({ getStatus: {} });
 
         if (!response.dishGetStatus) {

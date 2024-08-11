@@ -2,8 +2,18 @@
   "out": "./docs",
   "excludeExternals": true,
   "excludePrivate": true,
+  "excludeProtected": false,
   "entryPoints": [
-    "./src/index.ts"
+    "./src/index.ts",
+    "./src/protobuf/spacex/api/common/status.ts",
+    "./src/protobuf/spacex/api/device/command.ts",
+    "./src/protobuf/spacex/api/device/common.ts",
+    "./src/protobuf/spacex/api/device/device.ts",
+    "./src/protobuf/spacex/api/device/dish.ts",
+    "./src/protobuf/spacex/api/device/service.ts",
+    "./src/protobuf/spacex/api/device/transceiver.ts",
+    "./src/protobuf/spacex/api/device/wifi.ts",
+    "./src/protobuf/spacex/api/device/wifi_config.ts"
   ],
   "disableSources": true,
   "hideGenerator": true,

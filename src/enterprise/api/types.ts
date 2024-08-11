@@ -20,7 +20,7 @@
 
 export namespace Starlink {
     export namespace Management {
-        namespace Components {
+        export namespace Components {
             export interface Account {
                 /**
                  * The Account Number. Example: ACC-511274-31364-54
@@ -40,7 +40,7 @@ export namespace Starlink {
                 defaultRouterConfigId: string | null;
             }
 
-            interface DataUsage<DateType extends string | Date = string> {
+            export interface DataUsage<DateType extends string | Date = string> {
                 date: DateType;
                 priorityGB: number;
                 optInPriorityGB: number;
@@ -48,7 +48,7 @@ export namespace Starlink {
                 nonBillableGB: number;
             }
 
-            interface OverageLine {
+            export interface OverageLine {
                 restricted: number;
                 unrestricted: number;
                 pricePerGB: number;
@@ -58,7 +58,7 @@ export namespace Starlink {
                 productId: string | null;
             }
 
-            interface BillingCycle<DateType extends string | Date = string> {
+            export interface BillingCycle<DateType extends string | Date = string> {
                 startDate: DateType;
                 endDate: DateType;
                 dailyDataUsage: DataUsage<DateType>[] | null;
@@ -69,12 +69,12 @@ export namespace Starlink {
                 totalNonBillableGB: number
             }
 
-            interface DataBucket {
+            export interface DataBucket {
                 dataBucket: number;
                 totalGB: number;
             }
 
-            interface ServiceLineBillingCycle<DateType extends string | Date = string> {
+            export interface ServiceLineBillingCycle<DateType extends string | Date = string> {
                 startDate: DateType;
                 endDate: DateType;
                 dataUsage: DataBucket[] | null;
@@ -85,7 +85,7 @@ export namespace Starlink {
                 overageLines: OverageLine[] | null;
             }
 
-            interface ServicePlan<DateType extends string | Date = string> {
+            export interface ServicePlan<DateType extends string | Date = string> {
                 isoCurrencyCode: string | null;
                 isMobilePlan: boolean;
                 activeFrom: DateType | null;
@@ -361,8 +361,8 @@ export namespace Starlink {
             }
         }
 
-        namespace Components {
-            interface Id {
+        export namespace Components {
+            export interface Id {
                 UtcTimestampNs: number;
                 DeviceId: string;
             }
@@ -431,8 +431,8 @@ export namespace Starlink {
     }
 
     export namespace Common {
-        namespace Components {
-            interface Member {
+        export namespace Components {
+            export interface Member {
                 memberNames: string[];
                 errorMessage: string;
             }

@@ -18,9 +18,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import { WifiGetDiagnosticsResponse2, WifiGetDiagnosticsResponse2_Network } from '../protobuf/spacex/api/device/wifi';
 import GRPCApi from './api/grpc_api';
-export { WifiGetDiagnosticsResponse2, WifiGetDiagnosticsResponse2_Network };
+import { StarlinkGRPC } from './api/types';
+export { StarlinkGRPC };
 
 export default class WiFiRouter extends GRPCApi {
     constructor (
@@ -34,7 +34,7 @@ export default class WiFiRouter extends GRPCApi {
     /**
      * Fetches diagnostics information from a local WiFi Router
      */
-    public async fetch_diagnostics (): Promise<WifiGetDiagnosticsResponse2> {
+    public async fetch_diagnostics (): Promise<StarlinkGRPC.WifiRouter.Diagnostics> {
         const response = await this.handle({ getDiagnostics: {} });
 
         if (!response.wifiGetDiagnostics2) {

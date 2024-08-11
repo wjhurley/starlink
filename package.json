@@ -1,6 +1,6 @@
 {
   "name": "@gibme/starlink",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A Package for interacting with various Starlink API(s)",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -45,6 +45,13 @@
   },
   "engines": {
     "node": ">=16"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gibme-npm/starlink.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gibme-npm/starlink/issues"
   },
   "engineStrict": true,
   "author": {
