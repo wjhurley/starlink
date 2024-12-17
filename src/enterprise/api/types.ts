@@ -425,11 +425,10 @@ export namespace Starlink {
 
         export namespace Response {
             export interface Data {
+                [key: string]: any[];
                 Router: Components.Router[];
                 UserTerminal: Components.UserTerminal[];
                 UserTerminalDataUsage: any[];
-
-                [key: string]: any[];
             }
         }
     }
