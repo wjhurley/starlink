@@ -379,6 +379,12 @@ export namespace Starlink {
                 DeviceId: string;
             }
 
+            export interface IpAllocs extends Id {
+                Ipv4: string[];
+                Ipv6Cpe: string[];
+                Ipv6Ue: string[];
+            }
+
             export interface Router extends Id {
                 WifiUptimeS: number;
                 WifiSoftwareVersion: string;
@@ -434,6 +440,7 @@ export namespace Starlink {
 
         export namespace Response {
             export interface Data {
+                IpAllocs?: Components.IpAllocs[];
                 Router: Components.Router[];
                 UserTerminal: Components.UserTerminal[];
                 UserTerminalDataUsage: any[];
