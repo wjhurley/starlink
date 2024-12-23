@@ -427,6 +427,7 @@ export namespace Starlink {
                 SignalQuality: number,
                 H3CellId: number,
                 SecondsUntilSwupdateRebootPossible: number,
+                RunningSoftwareVersion: string;
                 ActiveAlerts: string []
             }
         }
