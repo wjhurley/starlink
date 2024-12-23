@@ -1,6 +1,6 @@
 {
   "name": "@gibme/starlink",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A Package for interacting with various Starlink API(s)",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -44,7 +44,7 @@
     "prepublishOnly": "yarn build"
   },
   "engines": {
-    "node": ">=16"
+    "node": ">=18"
   },
   "repository": {
     "type": "git",
