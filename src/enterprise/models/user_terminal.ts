@@ -105,6 +105,10 @@ export default class UserTerminal extends BaseAPI {
         return this.userTerminal.kitSerialNumber;
     }
 
+    public get nickname (): string | null {
+        return this.userTerminal.nickname;
+    }
+
     public get routers (): Router[] {
         return this.userTerminal.routers.map(router => new Router(
             this.client_id,

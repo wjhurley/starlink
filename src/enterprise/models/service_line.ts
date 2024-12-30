@@ -283,6 +283,10 @@ export default class ServiceLine extends BaseAPI {
         return this.serviceLine.addressReferenceId;
     }
 
+    public get aviationMetadata (): Starlink.Management.Components.AviationMetadata | null {
+        return this.serviceLine.aviationMetadata;
+    }
+
     public get delayedProductId (): string | null {
         return this.serviceLine.delayedProductId;
     }
