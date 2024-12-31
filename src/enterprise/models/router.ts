@@ -74,11 +74,11 @@ export default class Router extends BaseAPI {
         return JSON.stringify(this.router);
     }
 
-    public get accountNumber (): string {
+    public get accountNumber (): string | null {
         return this.router.accountNumber;
     }
 
-    public get configId (): string {
+    public get configId (): string | null {
         return this.router.configId;
     }
 
@@ -88,6 +88,16 @@ export default class Router extends BaseAPI {
 
     public get hardwareVersion (): string {
         return this.router.hardwareVersion;
+    }
+
+    public get lastBonded (): Date | null {
+        return this.router.lastBonded !== null
+            ? new Date(this.router.lastBonded)
+            : this.router.lastBonded;
+    }
+
+    public get nickname (): string | null {
+        return this.router.nickname;
     }
 
     public get routerId (): string {

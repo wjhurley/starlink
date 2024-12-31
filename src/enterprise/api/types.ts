@@ -144,15 +144,15 @@ export namespace Starlink {
                 billingCycles: ServiceLineBillingCycle<DateType>[] | null;
             }
 
-            export interface Router {
+            export interface Router<DateType extends Date | string = string> {
                 /**
                  * Account Number this router is bonded to.
                  */
-                accountNumber: string;
+                accountNumber: string | null;
                 /**
                  * Router config this router is assigned to, or empty if no config assigned.
                  */
-                configId: string;
+                configId: string | null;
                 /**
                  * True if this router is known to be directly connected to a user terminal.
                  */
@@ -161,6 +161,11 @@ export namespace Starlink {
                  * Hardware version of the router: 'v1', 'v2', or 'v3'.
                  */
                 hardwareVersion: string;
+                /**
+                 * Last time the router bonded to a user terminal
+                 */
+                lastBonded: DateType | null;
+                nickname: string | null;
                 routerId: string;
                 /**
                  * User terminal Id this router is bonded to.
@@ -231,9 +236,14 @@ export namespace Starlink {
                 active: boolean;
                 dishSerialNumber: string;
                 kitSerialNumber: string;
+                nickname: string | null;
                 routers: Router[];
                 serviceLineNumber: string | null;
                 userTerminalId: string;
+            }
+
+            export interface AviationMetadata {
+                tailNumber: string | null;
             }
 
             export interface ServiceLine<DateType extends Date | string = string> {
@@ -246,6 +256,7 @@ export namespace Starlink {
                  * Example: 55ec6574-10d8-bd9c-1951-d4184f4ae467
                  */
                 addressReferenceId: string;
+                aviationMetadata: AviationMetadata | null;
                 /**
                  * Scheduled product change for next bill date
                  */
